@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sentryscope"
+version = "0.1.0"
+description = "Local static analysis and finding lifecycle management for Python"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+sentryscope = "sentryscope.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["sentryscope*"]

@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>SentryScope</title>
+<style>:root{color-scheme:light;--ink:#16232f;--muted:#60717d;--paper:#eef2f5;--line:#dce4e9;--accent:#126d67}
+*{box-sizing:border-box}body{margin:0;font:15px/1.65 system-ui;background:var(--paper);color:var(--ink)}
+header{background:#122c35;color:#edf8f8;padding:45px max(24px,calc((100vw - 1120px)/2))}header small{letter-spacing:.14em;color:#83c6be}
+h1{font-size:clamp(30px,4vw,48px);margin:10px 0;overflow-wrap:anywhere}header p{color:#b8d0d2;margin:0}
+main{max-width:1168px;padding:28px 24px 70px;margin:auto}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.metric{background:white;border:1px solid var(--line);border-radius:10px;padding:20px}.metric span{text-transform:uppercase;font-size:12px;color:var(--muted)}
+.metric strong{display:block;font-size:32px;line-height:1.2;margin-top:8px}.toolbar{display:flex;gap:12px;margin:24px 0;flex-wrap:wrap}
+label{display:grid;font-size:12px;color:var(--muted);gap:4px}input,select{font:inherit;padding:10px 12px;background:white;border:1px solid #bccbd4;border-radius:6px;min-width:180px}
+input{min-width:280px}.finding{background:white;border:1px solid var(--line);border-radius:10px;padding:25px;margin:16px 0}
+.row{display:flex;gap:12px;align-items:center;font-size:12px;color:var(--muted)}.state{margin-left:auto}
+.badge{padding:3px 9px;border-radius:4px;text-transform:uppercase;font-weight:700}.high,.critical{background:#fbe1df;color:#963327}.medium{background:#fff0ce;color:#815c11}.low{background:#dfedf7;color:#245578}
+h2{font-size:21px;margin:14px 0 2px}.location,.muted{color:var(--muted)}.location,.fingerprint{overflow-wrap:anywhere}
+.fix{border-left:3px solid var(--accent);padding-left:14px;color:#28534f}details{border-top:1px solid var(--line);padding-top:14px;margin-top:18px}
+summary{cursor:pointer}aside{background:#fff0ce;padding:20px;border-radius:8px;margin:20px 0}.empty{text-align:center;padding:50px;color:var(--muted)}
+footer{margin-top:28px;color:var(--muted);font-size:13px}@media(max-width:600px){.metrics{grid-template-columns:repeat(2,1fr)}.finding{padding:18px}input{min-width:0;width:100%}.toolbar label:first-child{width:100%}}
+@media print{header{background:white;color:black;padding:0}.toolbar{display:none}main{padding:20px 0}.finding{break-inside:avoid}}
+</style></head><body><header><small>SENTRYSCOPE / STATIC ANALYSIS</small><h1>Example application</h1><p>Local findings, traceable decisions.</p></header><main>
+<section class="metrics"><div class="metric"><span>critical</span><strong>0</strong></div><div class="metric"><span>high</span><strong>4</strong></div><div class="metric"><span>medium</span><strong>6</strong></div><div class="metric"><span>low</span><strong>3</strong></div></section>
+<section class="toolbar" aria-label="Finding filters"><label>Search<input id="search" type="search" placeholder="Path, rule or description"></label>
+<label>Severity<select id="severity"><option value="">All severities</option><option>critical</option><option>high</option><option>medium</option><option>low</option></select></label>
+<label>State<select id="state"><option value="">All states</option><option>new</option><option>existing</option><option>suppressed</option></select></label></section>
+<p id="visible" aria-live="polite"></p><section id="findings"><article class="finding" data-severity="medium" data-state="new">
+<div class="row"><span class="badge medium">medium</span><span>CFG001 / CWE-250</span><span class="state">new</span></div>
+<h2>Root container user</h2><p class="location">Dockerfile:1:1 · &lt;manifest&gt;</p>
+<p>The final Docker build stage has no explicit non-root USER.</p><p class="fix">Create a dedicated runtime user and set USER in the final stage.</p>
+<details><summary>Trace and identity</summary><ol><li>No data-flow trace for this rule.</li></ol>
+<p class="fingerprint">3ff35d41f9ee7576dd52362cb9f1034da89f1fac9e4fa9af9ae86ec574a8ee3f</p><p>Confidence: high</p></details></article><article class="finding" data-severity="low" data-state="new">
+<div class="row"><span class="badge low">low</span><span>CFG002 / CWE-1104</span><span class="state">new</span></div>
+<h2>Mutable container base</h2><p class="location">Dockerfile:1:1 · &lt;manifest&gt;</p>
+<p>A Docker base image is not pinned by digest.</p><p class="fix">Pin a reviewed image digest and update it through a controlled process.</p>
+<details><summary>Trace and identity</summary><ol><li>No data-flow trace for this rule.</li></ol>
+<p class="fingerprint">4ee5dc1f41dd271d599cc54fecfcf49c125583395123c339478cc47e5f0b1e16</p><p>Confidence: high</p></details></article><article class="finding" data-severity="low" data-state="new">
+<div class="row"><span class="badge low">low</span><span>DEP001 / CWE-1104</span><span class="state">new</span></div>
+<h2>Unpinned dependency</h2><p class="location">requirements.txt:1:1 · &lt;manifest&gt;</p>
+<p>A requirements entry lacks an exact version pin.</p><p class="fix">Use reviewed lock data and hashes for reproducible installation.</p>
+<details><summary>Trace and identity</summary><ol><li>No data-flow trace for this rule.</li></ol>
+<p class="fingerprint">0bf31de8ff6a8539968193f892ba9cb30b6f80b0fe498084294929f70342e8f8</p><p>Confidence: high</p></details></article><article class="finding" data-severity="low" data-state="new">
+<div class="row"><span class="badge low">low</span><span>DEP001 / CWE-1104</span><span class="state">new</span></div>
+<h2>Unpinned dependency</h2><p class="location">requirements.txt:2:1 · &lt;manifest&gt;</p>
+<p>A requirements entry lacks an exact version pin.</p><p class="fix">Use reviewed lock data and hashes for reproducible installation.</p>
+<details><summary>Trace and identity</summary><ol><li>No data-flow trace for this rule.</li></ol>
+<p class="fingerprint">c9d95ea0beca26fe0c4b34006d84e000504604af3697ad444535b3b23e38afed</p><p>Confidence: high</p></details></article><article class="finding" data-severity="high" data-state="new">
+<div class="row"><span class="badge high">high</span><span>PY003 / CWE-89</span><span class="state">new</span></div>
+<h2>Caller-controlled SQL</h2><p class="location">service.py:12:12 · user_query</p>
+<p>A query expression carries untrusted or caller-controlled data.</p><p class="fix">Use a static SQL statement with bound parameters for values.</p>
+<details><summary>Trace and identity</summary><ol><li><code>10:1</code> Function parameter</li><li><code>11:5</code> Assigned value</li><li><code>12:12</code> Sensitive operation</li></ol>
+<p class="fingerprint">1ae12b80df825df345ce77c15ba832d60fe3927fa460de19111053bd9b3ee40f</p><p>Confidence: medium</p></details></article><article class="finding" data-severity="high" data-state="new">
+<div class="row"><span class="badge high">high</span><span>PY002 / CWE-78</span><span class="state">new</span></div>
+<h2>Shell interpretation</h2><p class="location">service.py:16:12 · launch</p>
+<p>A subprocess invokes a shell, or an os shell helper is used.</p><p class="fix">Pass a fixed executable and a separate argument list with shell disabled.</p>
+<details><summary>Trace and identity</summary><ol><li><code>15:1</code> Function parameter</li><li><code>16:12</code> Sensitive operation</li></ol>
+<p class="fingerprint">f6a4d26b577a71fe3af756a3a345b18f4d25afdebf339c0e51d4fd160f68e53d</p><p>Confidence: high</p></details></article><article class="finding" data-severity="high" data-state="new">
+<div class="row"><span class="badge high">high</span><span>PY001 / CWE-95</span><span class="state">new</span></div>
+<h2>Dynamic code execution</h2><p class="location">service.py:20:12 · calculate</p>
+<p>eval or exec evaluates a string as Python code.</p><p class="fix">Replace code evaluation with explicit parsing or a fixed operation map.</p>
+<details><summary>Trace and identity</summary><ol><li><code>19:1</code> Function parameter</li><li><code>20:12</code> Sensitive operation</li></ol>
+<p class="fingerprint">c23e0dbf5fb594c29ac2b97631ed8b3d6669d2a77da2218ade6906fd8cf6be54</p><p>Confidence: high</p></details></article><article class="finding" data-severity="high" data-state="new">
+<div class="row"><span class="badge high">high</span><span>PY004 / CWE-502</span><span class="state">new</span></div>
+<h2>Unsafe object deserialization</h2><p class="location">service.py:24:12 · restore</p>
+<p>An object deserializer can execute code when data is hostile.</p><p class="fix">Use a constrained data format such as JSON and validate its schema.</p>
+<details><summary>Trace and identity</summary><ol><li><code>23:1</code> Function parameter</li><li><code>24:12</code> Sensitive operation</li></ol>
+<p class="fingerprint">1acd967db728a7add64250cc989e503b41d42daf337a273e61410bbba3ba0ad6</p><p>Confidence: high</p></details></article><article class="finding" data-severity="medium" data-state="new">
+<div class="row"><span class="badge medium">medium</span><span>PY010 / CWE-22</span><span class="state">new</span></div>
+<h2>Caller-controlled filesystem path</h2><p class="location">service.py:28:12 · read_document</p>
+<p>A file operation receives an untrusted or caller-controlled path.</p><p class="fix">Resolve under an intended root and verify containment before opening.</p>
+<details><summary>Trace and identity</summary><ol><li><code>27:1</code> Function parameter</li><li><code>28:12</code> Sensitive operation</li></ol>
+<p class="fingerprint">7abff87f1f32157344991a54ac4c90a265aae8f52db02128c683834c1c104221</p><p>Confidence: medium</p></details></article><article class="finding" data-severity="medium" data-state="new">
+<div class="row"><span class="badge medium">medium</span><span>PY011 / CWE-338</span><span class="state">new</span></div>
+<h2>Non-cryptographic secret generation</h2><p class="location">service.py:32:20 · issue_token</p>
+<p>A security-named variable uses the random module.</p><p class="fix">Use secrets.token_bytes, token_hex or token_urlsafe.</p>
+<details><summary>Trace and identity</summary><ol><li>No data-flow trace for this rule.</li></ol>
+<p class="fingerprint">2a879e914e325fe4f19f482c66c27ed7964e6e9cd00dc9a618b5fbe921e2481e</p><p>Confidence: high</p></details></article><article class="finding" data-severity="medium" data-state="new">
+<div class="row"><span class="badge medium">medium</span><span>PY007 / CWE-327</span><span class="state">new</span></div>
+<h2>Weak cryptographic digest</h2><p class="location">service.py:37:14 · unsafe_defaults</p>
+<p>MD5 or SHA-1 is used without declaring a non-security purpose.</p><p class="fix">Use SHA-256 or a purpose-specific password hashing scheme.</p>
+<details><summary>Trace and identity</summary><ol><li>No data-flow trace for this rule.</li></ol>
+<p class="fingerprint">22f1af745185f20bc4d288475cac6557e29fe3e8fa1565779f8dc571d2ad6ce0</p><p>Confidence: high</p></details></article><article class="finding" data-severity="medium" data-state="new">
+<div class="row"><span class="badge medium">medium</span><span>PY008 / CWE-377</span><span class="state">new</span></div>
+<h2>Race-prone temporary name</h2><p class="location">service.py:38:16 · unsafe_defaults</p>
+<p>mktemp returns a name without atomically creating the file.</p><p class="fix">Use TemporaryFile, NamedTemporaryFile or mkstemp.</p>
+<details><summary>Trace and identity</summary><ol><li>No data-flow trace for this rule.</li></ol>
+<p class="fingerprint">50884b6837c23e9dc704aa549e711f5c0b5c3aa3bde60dcfb6d1b3978ea6f73e</p><p>Confidence: high</p></details></article><article class="finding" data-severity="medium" data-state="new">
+<div class="row"><span class="badge medium">medium</span><span>PY014 / CWE-732</span><span class="state">new</span></div>
+<h2>World-writable permissions</h2><p class="location">service.py:39:5 · unsafe_defaults</p>
+<p>A chmod call explicitly grants write permission to other users.</p><p class="fix">Grant only the permissions required by the intended owner/group.</p>
+<details><summary>Trace and identity</summary><ol><li>No data-flow trace for this rule.</li></ol>
+<p class="fingerprint">a3f880022c3721cd6168ac9ee221d498bb6c41240e40504428bf3c2bae2e3c4b</p><p>Confidence: high</p></details></article></section>
+<footer>3 files analyzed · 846 bytes · No target code executed.</footer></main>
+<script>(()=>{const cards=[...document.querySelectorAll('.finding')];const search=document.getElementById('search');const severity=document.getElementById('severity');const state=document.getElementById('state');
+function filter(){let count=0;const term=search.value.toLowerCase();for(const card of cards){const show=(!severity.value||card.dataset.severity===severity.value)&&(!state.value||card.dataset.state===state.value)&&card.textContent.toLowerCase().includes(term);card.hidden=!show;if(show)count++;}document.getElementById('visible').textContent=count+' findings shown';}
+for(const control of [search,severity,state])control.addEventListener('input',filter);filter();})();</script></body></html>
